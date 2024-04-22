@@ -1,0 +1,25 @@
+body {
+    background-color: rgb(17, 93, 26);
+}
+
+input {
+    background-color: rgb(17, 93, 26);
+}
+
+h1 {
+    color:darkseagreen
+}
+
+label {
+    color: darkseagreen;
+}
+
+button {
+    background-color: black;
+    color: whitesmoke;
+}
+
+p {
+    background-color: darkseagreen;
+    color: whitesmoke;
+}

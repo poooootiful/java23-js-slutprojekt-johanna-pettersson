@@ -3,11 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
     <script src="/Prodjekt/Js/Sqript.js"></script>
-    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="/Prodjekt/Style.css">
 </head>
 <body>
-    
+    <nav>
+        <a href="">Home</a>
+        <a href="/Prodjekt/Html/Popular.html">Popular</a>
+        <a href="/Prodjekt/Html/TopRated.html">TopRated</a>
+    </nav>
+    <h1>The movie Search</h1>
+    <form name="Search">
+        <label id="Searchlabel" type="text">Search
+            <input type="text" id="textinput" type="text">
+        </label>
+        <button onclick="getresults()">Search</button>
+        <p id="temp"></p>
+    </form>
+    <div>
+        <h6 id="title"></h6>
+        <img id="picture" src="" alt="">
+        <p id="description"></p>
+    </div>
 </body>
 </html>
