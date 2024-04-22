@@ -8,23 +8,23 @@
     <link rel="stylesheet" href="/Prodjekt/Style.css">
 </head>
 <body>
-    <nav>
-        <a href="">Home</a>
-        <a href="/Prodjekt/Html/Popular.html">Popular</a>
-        <a href="/Prodjekt/Html/TopRated.html">TopRated</a>
-    </nav>
     <h1>The movie Search</h1>
-    <form name="Search">
-        <label id="Searchlabel" type="text">Search
-            <input type="text" id="textinput" type="text">
-        </label>
-        <button onclick="getresults()">Search</button>
-        <p id="temp"></p>
+    <form id="MovieSearch">
+        Search: <input type="text" name="term" value="Movie">
+        <input type="submit" value="Search">
     </form>
-    <div>
-        <h6 id="title"></h6>
-        <img id="picture" src="" alt="">
-        <p id="description"></p>
-    </div>
+
+    <form id="PeopleSearch" action="/Prodjekt/Js/Sqript.js">
+        Search: <input type="text" name="term" value="Person">
+        <input type="submit" value="Search">
+    </form>
+    
+<button onclick="movieresult()">Results</button>
+<button>TopRated</button>
+<Button>Popular</Button>
+
+<div>
+    <p id="formout"></p>
+</div>
 </body>
 </html>
