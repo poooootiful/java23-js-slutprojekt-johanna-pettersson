@@ -4,27 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <script src="/Prodjekt/Js/Sqript.js"></script>
+    <script src="/Prodjekt/Js/Sqript.js" defer></script>
+    
     <link rel="stylesheet" href="/Prodjekt/Style.css">
 </head>
 <body>
     <h1>The movie Search</h1>
-    <form id="MovieSearch">
-        Search: <input type="text" name="term" value="Movie">
-        <input type="submit" value="Search">
+    <form>
+        <input type="text" placeholder="movie">
+        <select name="" id="">
+            <option value="movie">Movie</option>
+            <option value="person">Person</option>
+        </select>
+        <button>Search</button>
     </form>
-
-    <form id="PeopleSearch" action="/Prodjekt/Js/Sqript.js">
-        Search: <input type="text" name="term" value="Person">
-        <input type="submit" value="Search">
-    </form>
+    <div id="moviediv"></div>
     
-<button onclick="movieresult()">Results</button>
-<button>TopRated</button>
-<Button>Popular</Button>
-
-<div>
-    <p id="formout"></p>
-</div>
+    <button onclick="Toprated()">TopRated</button>
+    <Button onclick="Popular()">Popular</Button>
 </body>
 </html>
