@@ -54,7 +54,7 @@ function moviesearch (term) {
       displaymovie(movie)
       }
     }
-  ).catch(responseError());
+  ).catch(error => responseError(error));
 }
 
 function displaymovie (movie) {
@@ -113,10 +113,10 @@ fetch('https://api.themoviedb.org/3/search/person?query='+term+'&include_adult=f
     displayperson(people)
     }
   }
-).catch(responseError);
+).catch(error => responseError(error));
 }
 
-function displayperson (people) {
+function displayperson () {
 
   const basepictureurl ='http://image.tmdb.org/t/p/w185';
   
@@ -149,15 +149,54 @@ function displayperson (people) {
     
     const knowformedia = people.known_for;
     console.log("Media:",knowformedia)
-   
-    const type = knowformedia[0].media_type
-    const title = knowformedia[0].title
-    console.log(type+':'+title)
-    const knowp = document.createElement('p')
-    const knowtext = document.createTextNode(type+":"+title)
-    knowp.appendChild(knowtext)
-    div.appendChild(knowp)
     
+    let type = 'Media';
+    let title = 'Title';
+    let type2 = 'Media';
+    let title2 = 'Title';
+    let type3 = 'Media';
+    let title3 = 'Title';
+    
+    console.log(knowformedia.length)
+    let length = knowformedia.length;
+
+    if (length === 3) {
+      type = knowformedia[0].media_type
+      title = knowformedia[0].title
+      type2 = knowformedia[1].media_type
+      title2 = knowformedia[1].title
+      type3 = knowformedia[2].media_type
+      title3 = knowformedia[2].title
+      
+    }else if (length === 2) {
+      type = knowformedia[0].media_type
+      title = knowformedia[0].title
+      type2 = knowformedia[1].media_type
+      title2 = knowformedia[1].title
+
+    } else if (length === 1) {
+      type = knowformedia[0].media_type
+      title = knowformedia[0].title
+    }else {
+      console.log('There is no knownmedia found')
+    }
+    console.log(type+':'+title)
+    const knownp = document.createElement('p')
+    const knowntext = document.createTextNode (type+" : "+title)
+    knownp.appendChild(knowntext)
+    div.appendChild(knownp)
+
+    console.log(type2+':'+title2)
+    const knowp2 = document.createElement('p')
+    const knowtext2 = document.createTextNode(type2+" : "+title2)
+    knowp2.appendChild(knowtext2)
+    div.appendChild(knowp2)
+
+    console.log(type3+':'+title3)
+    const knowp3 = document.createElement('p')
+    const knowtext3 = document.createTextNode(type3+" : "+title3)
+    knowp3.appendChild(knowtext3)
+    div.appendChild(knowp3)
 
   } else {
     console.log("No person found with that name.");
@@ -173,7 +212,7 @@ async function Toprated () {
         return response.json()
     }
     if(response.status === 404){
-        throw new Error('toprated not found');
+        throw new Error ('toprated not found');
     }
 })
   .then(data => {
@@ -204,7 +243,7 @@ async function Popular () {
       diplaylist(movie)
       }
     }
-  ).catch(responseError());
+  ).catch(responseError(error));
 }
 
 function diplaylist (movie) {
