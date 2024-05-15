@@ -309,11 +309,7 @@ function diplaylist (movie) {
 function responseError (error) {
     console.log(error.message)
   
-    let value='';
-    if (error.value === undefined) {
-      value = 'Error value is undefined'
-    }
-    let errorstring = 'Network issue:'+' '+error.message+' '+value;
+    let errorstring = 'Issue:'+' '+error.message+' '+error.value;
     clearcontent();
     const div = document.getElementById("contentdiv")
 
