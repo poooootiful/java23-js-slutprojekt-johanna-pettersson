@@ -5,10 +5,12 @@ const forme = document.querySelector('form');
 
 forme.addEventListener('submit', handleSubmit);
 
+defoultpicturepath = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/195px-No-Image-Placeholder.svg.png'
+
 function handleSubmit(event){
     event.preventDefault();
 
-    console.log('search submitted!')
+    //console.log('search submitted!')
 
     const searchterm = forme.querySelector('input').value;
     const searchatribute = forme.querySelector('select').value;
@@ -16,18 +18,20 @@ function handleSubmit(event){
     console.log(searchterm, searchatribute);
 
     if (searchatribute.match("movie")) {
-        console.log("We looking for a movie")
+        //console.log("We looking for a movie")
 
         moviesearch(searchterm);
     }else {
-        console.log("we looking or a person")
+        //console.log("we looking or a person")
 
         personsearch(searchterm);
     }
 }
+
 function clearcontent() {
   document.getElementById('contentdiv').innerHTML = " "
 }
+
 const options = {
   method: 'GET',
   headers: {
@@ -37,7 +41,7 @@ const options = {
 
 function moviesearch (term) {
   clearcontent();
-  console.log(term)
+  //console.log(term)
 
   fetch('https://api.themoviedb.org/3/search/movie?query=' + term + '&include_adult=false&language=en-US&page=1', options)
     .then(response => {
@@ -63,42 +67,46 @@ function displaymovie (movie) {
     const div = document.getElementById("contentdiv")
   
     const titlestring = movie.title;
-    console.log("Title:", titlestring);
+    //console.log("Title:", titlestring);
     const h2 = document.createElement('h2');
     const titletext = document.createTextNode(titlestring);
     h2.appendChild(titletext)
     div.appendChild(h2)
 
     const posterpath = movie.poster_path;
-    console.log("Posterpath:", posterpath)
+    //console.log("Posterpath:", posterpath)
     const img = document.createElement('img')
-    img.src = basepictureurl + posterpath
+
+    if (posterpath == null) {
+      img.src = defoultpicturepath
+    } else {
+      img.src = basepictureurl + posterpath
+    }
+    
     div.appendChild(img)
     
     const datestring = movie.release_date;
-    console.log("Release date:", datestring)
+    //console.log("Release date:", datestring)
     const datep = document.createElement('p')
     const datetext = document.createTextNode(datestring)
     datep.appendChild(datetext)
     div.appendChild(datep)
     
     const decription = movie.overview;
-    console.log("decription:",decription)
+    //console.log("decription:",decription)
     const decriptionP = document.createElement('p')
     const decriptiontext = document.createTextNode(decription)
     decriptionP.appendChild(decriptiontext)
     div.appendChild(decriptionP)
-
-  } else {
-    console.log("No movie found with that title.");
-  }
+  } 
+  console.log('Movie display completed')
 }
 
 async function personsearch (term) {
 clearcontent()
-console.log(term)
+//console.log(term)
 
-fetch('https://api.themoviedb.org/3/search/person?query='+term+'&include_adult=false&language=en-US&page=1', options)
+fetch('https://api.themoviedb.org/3/search/person?query='+ term +'&include_adult=false&language=en-US&page=1', options)
   .then(response => {
     if(response.status >= 200 && response.status < 300){
         return response.json()
@@ -116,7 +124,7 @@ fetch('https://api.themoviedb.org/3/search/person?query='+term+'&include_adult=f
 ).catch(error => responseError(error));
 }
 
-function displayperson () {
+function displayperson (people) {
 
   const basepictureurl ='http://image.tmdb.org/t/p/w185';
   
@@ -124,31 +132,33 @@ function displayperson () {
     const div = document.getElementById("contentdiv")
   
     const name = people.name;
-    console.log("name:", name);
+    //console.log("name:", name);
     const h2 = document.createElement('h2');
     const nametext = document.createTextNode(name);
     h2.appendChild(nametext)
     div.appendChild(h2)
 
+    
     const profilepicture = people.profile_path;
-    console.log("Picture:", profilepicture)
+    //console.log("Picture:", profilepicture)
     const img = document.createElement('img')
-    img.src = basepictureurl + profilepicture
-    div.appendChild(img)
 
     if (profilepicture == null) {
-      img.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/195px-No-Image-Placeholder.svg.png'
+      img.src = defoultpicturepath
+    }else {
+      img.src = basepictureurl + profilepicture
     }
-    
+    div.appendChild(img)
+
     const knownforprofetion = people.known_for_department;
-    console.log("Profetion:", knownforprofetion)
+    //console.log("Profetion:", knownforprofetion)
     const profetionp = document.createElement('p')
     const profetiontext = document.createTextNode(knownforprofetion)
     profetionp.appendChild(profetiontext)
     div.appendChild(profetionp)
     
     const knowformedia = people.known_for;
-    console.log("Media:",knowformedia)
+    //console.log("Media:",knowformedia)
     
     let type = 'Media';
     let title = 'Title';
@@ -198,10 +208,10 @@ function displayperson () {
     knowp3.appendChild(knowtext3)
     div.appendChild(knowp3)
 
-  } else {
-    console.log("No person found with that name.");
-  }
+  } 
+  console.log('People Display Completed')
 }
+
 async function Toprated () {
 
   clearcontent();
@@ -254,20 +264,20 @@ function diplaylist (movie) {
     const div = document.getElementById("contentdiv")
   
     const titlestring = movie.title;
-    console.log("Title:", titlestring);
+    //console.log("Title:", titlestring);
     const h2 = document.createElement('h2');
     const titletext = document.createTextNode(titlestring);
     h2.appendChild(titletext)
     div.appendChild(h2)
 
     const posterpath = movie.poster_path;
-    console.log("Posterpath:", posterpath)
+    //console.log("Posterpath:", posterpath)
     const img = document.createElement('img')
     img.src = basepictureurl + posterpath
     div.appendChild(img)
     
     const datestring = movie.release_date;
-    console.log("Release date:", datestring)
+    //console.log("Release date:", datestring)
     const datep = document.createElement('p')
     const datetext = document.createTextNode(datestring)
     datep.appendChild(datetext)
