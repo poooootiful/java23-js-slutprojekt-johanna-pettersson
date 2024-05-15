@@ -42,20 +42,30 @@ const options = {
 function moviesearch (term) {
   clearcontent();
   //console.log(term)
-
+  
   fetch('https://api.themoviedb.org/3/search/movie?query=' + term + '&include_adult=false&language=en-US&page=1', options)
     .then(response => {
-      if(response.status >= 200 && response.status < 300){
-          return response.json()
+      if (response.status == 404) {
+        throw new Error ('Movie not found')
       }
-      if(response.status === 404){
-          throw new Error('Movie not found');
+      else {
+        return response.json();  
       }
-  })
+    })
     .then(data => {
-      for (i=0; i<20; i++) {
-      const movie = data.results[i];
-      displaymovie(movie)
+      if (data.results.length == 0){
+        clearcontent();
+        const div = document.getElementById("contentdiv")
+
+        const errorEl = document.createElement('h1');
+        errorEl.innerText = 'No movie found with that title';
+        div.append(errorEl);
+      }
+        else {
+        for (i=0; i<20; i++) {
+        const movie = data.results[i];
+        displaymovie(movie)
+        }
       }
     }
   ).catch(error => responseError(error));
@@ -108,14 +118,23 @@ clearcontent()
 
 fetch('https://api.themoviedb.org/3/search/person?query='+ term +'&include_adult=false&language=en-US&page=1', options)
   .then(response => {
-    if(response.status >= 200 && response.status < 300){
-        return response.json()
+    if (response.status == 404) {
+      throw new Error ('Person not found')
     }
-    if(response.status === 404){
-        throw new Error('person not found');
+    else {
+      return response.json();
     }
+    
 })
   .then(data => {
+    if (data.results.length == 0){
+      clearcontent();
+      const div = document.getElementById("contentdiv")
+
+      const errorEl = document.createElement('h1');
+      errorEl.innerText = 'No persons found with that name';
+      div.append(errorEl);
+    }
     for (i=0; i<20; i++) {
     const people = data.results[i];
     displayperson(people)
@@ -231,7 +250,7 @@ async function Toprated () {
     diplaylist(movie)
     }
   }
-).catch(responseError(error));
+).catch(error => responseError(error));
 }
 
 async function Popular () {
@@ -253,7 +272,7 @@ async function Popular () {
       diplaylist(movie)
       }
     }
-  ).catch(responseError(error));
+  ).catch(error => responseError(error));
 }
 
 function diplaylist (movie) {
@@ -289,10 +308,17 @@ function diplaylist (movie) {
 }
 function responseError (error) {
     console.log(error.message)
+  
+    let value='';
+    if (error.value === undefined) {
+      value = 'Error value is undefined'
+    }
+    let errorstring = 'Network issue:'+' '+error.message+' '+value;
     clearcontent();
     const div = document.getElementById("contentdiv")
 
     const errorEl = document.createElement('h1');
-    errorEl.innerText = error.message;
+
+    errorEl.innerText = errorstring;
     div.append(errorEl);
 }
